@@ -5,13 +5,14 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./tests/unit/setup.ts'],
     globals: true,
+    include: ['tests/unit/**/*.{test,spec}.{ts,tsx}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
       include: ['src/**'],
-      exclude: ['src/test/**', 'src/main.tsx'],
+      exclude: ['src/main.tsx', 'src/vite-env.d.ts'],
     },
   },
 })
