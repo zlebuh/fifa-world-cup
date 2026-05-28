@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/fifa-world-cup/',
+  base: process.env['BASE_PATH'] ?? '/fifa-world-cup/',
   plugins: [react(), tailwindcss()],
 })
