@@ -51,20 +51,19 @@ interface Match {
 
 ## Tech stack
 
-> Stack details are finalized in issue #9. Update this section once closed.
-
 | Concern | Choice | Notes |
 |---|---|---|
-| Framework | TBD | React + Vite or Astro preferred for static output |
-| Language | TypeScript (strict) | No plain JS files |
-| Styling | TBD | Tailwind CSS preferred |
-| Map | TBD | Leaflet or Mapbox GL JS |
-| Unit / component tests | Vitest + Testing Library | |
+| Framework | React 19 + Vite 6 | Static output, great GitHub Pages compatibility |
+| Language | TypeScript 5 (strict) | No plain JS files; `noUnusedLocals`, `noUnusedParameters` on |
+| Styling | Tailwind CSS v4 | CSS-first config via `@tailwindcss/vite` plugin |
+| Map | Leaflet | No API key needed; client-side only |
+| Unit / component tests | Vitest 3 + Testing Library | jsdom environment |
 | E2E tests | Playwright | |
 | Visual regression | Playwright screenshots | Baselines stored in repo |
 | a11y tests | @axe-core/playwright | Integrated into E2E suite |
+| Package manager | pnpm | `pnpm-workspace.yaml` for build approvals |
 | CI | GitHub Actions | |
-| Deploy | GitHub Pages via `gh-pages` branch | |
+| Deploy | GitHub Pages via `gh-pages` branch | `base: '/fifa-world-cup/'` in vite.config.ts |
 
 ---
 
@@ -259,6 +258,12 @@ Issues are sequenced in 8 phases. Do not start a phase until the previous is mer
   library, data via a scheduled GitHub Action writing `matches.json`.
 - **PWA / match reminders** (#24) — closed, deprioritized. Not needed for
   initial release. Can be reopened later.
+- **React + Vite over Astro** (#9) — Vite 6 + React 19 chosen over Astro. Both
+  output static HTML; React was preferred for richer component interactivity
+  (map, calendar, filtering) without SSR complexity.
+- **Tailwind CSS v4** (#9) — CSS-first config via `@tailwindcss/vite` plugin;
+  no `tailwind.config.ts` needed.
+- **Leaflet over Mapbox** (#9) — no API key required; simpler for static hosting.
 
 ---
 
