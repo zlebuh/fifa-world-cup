@@ -11,7 +11,7 @@ export function filterMatches(matches: Match[], filters: MatchFilters): Match[] 
         return false
       }
     }
-    if (filters.group && match.group !== filters.group) return false
+    if (filters.group && match.group?.toLowerCase() !== filters.group.toLowerCase()) return false
     if (filters.stage && match.stage !== filters.stage) return false
     return true
   })

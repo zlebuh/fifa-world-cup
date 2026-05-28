@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { createHashRouter, RouterProvider, NavLink, Outlet } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
 import ListView from './views/list/ListView'
@@ -13,7 +14,7 @@ function Layout() {
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <header className="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center gap-6">
-        <span className="font-bold text-lg tracking-tight">FIFA World Cup 2026</span>
+        <h1 className="font-bold text-lg tracking-tight">FIFA World Cup 2026</h1>
         <nav className="flex gap-2">
           <NavLink to="/" end className={navClass}>List</NavLink>
           <NavLink to="/calendar" className={navClass}>Calendar</NavLink>
@@ -27,7 +28,7 @@ function Layout() {
   )
 }
 
-const router = createHashRouter([
+const routes = [
   {
     path: '/',
     element: <Layout />,
@@ -37,9 +38,11 @@ const router = createHashRouter([
       { path: 'map', element: <MapView /> },
     ],
   },
-])
+]
 
 export default function App() {
+  const [router] = useState(() => createHashRouter(routes))
+
   return (
     <AppProvider>
       <RouterProvider router={router} />

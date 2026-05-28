@@ -1,15 +1,15 @@
 import { createContext, useContext, useState } from 'react'
-import type { ReactNode } from 'react'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import type { Match, MatchFilters } from '../types'
 import { detectTimezone } from '../services/timezone'
 
 interface AppState {
   matches: Match[]
-  setMatches: (m: Match[]) => void
+  setMatches: Dispatch<SetStateAction<Match[]>>
   filters: MatchFilters
-  setFilters: (f: MatchFilters) => void
+  setFilters: Dispatch<SetStateAction<MatchFilters>>
   timezone: string
-  setTimezone: (tz: string) => void
+  setTimezone: Dispatch<SetStateAction<string>>
 }
 
 const AppContext = createContext<AppState | null>(null)

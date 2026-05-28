@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // Match the production base path so DATA_URL in matches.ts resolves correctly
+    'import.meta.env.BASE_URL': JSON.stringify('/fifa-world-cup/'),
+  },
   test: {
     environment: 'jsdom',
     setupFiles: ['./tests/unit/setup.ts'],
