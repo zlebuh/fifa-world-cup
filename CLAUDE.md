@@ -189,29 +189,76 @@ Scheduled (daily)
 
 ---
 
-## Feature backlog summary
+## Development plan
 
-Planned features (all tracked as GitHub issues):
+Issues are sequenced in 8 phases. Do not start a phase until the previous is merged and green.
 
-**Schedule views**
-- Classic list view (#1)
-- Calendar view (#2)
-- Map view (#3)
+### Phase 1 — Foundation
+| # | Issue |
+|---|---|
+| #9 | Tech stack selection |
+| #10 | Application architecture |
 
-**Timezone**
-- Auto-detect from visitor location (#4)
-- Manual timezone selector (#5)
+### Phase 2 — Project infrastructure
+| # | Issue |
+|---|---|
+| #12 | PR rules and CI pipeline |
+| #13 | Automated deployment (GitHub Pages + preview URLs) |
+| #22 | Dependency update automation (Renovate) |
 
-**Filtering**
-- By team (#6), by group (#7), by stage (#8)
+### Phase 3 — Data pipeline
+| # | Issue |
+|---|---|
+| #23 | Match data pipeline — fetch & normalize World Cup schedule |
 
-**To consider / future**
-- PWA with match reminder notifications (service worker, works on GitHub Pages)
-- Shareable URLs with filter + timezone state in query params
-- Live standings table (group stage)
-- Interactive knockout bracket visualizer
-- Dark / light mode
-- Standings update automation (data action re-runs after each match day)
+### Phase 4 — Test infrastructure
+| # | Issue |
+|---|---|
+| #16 | Unit tests: service and data layer |
+| #17 | Unit tests: frontend components |
+| #11 | E2E test project setup (Playwright) |
+| #19 | Accessibility automated testing (axe-core) |
+| #18 | Visual regression testing |
+| #20 | Code coverage reporting |
+| #21 | Performance budget — Lighthouse CI |
+
+### Phase 5 — Core features: Schedule
+| # | Issue |
+|---|---|
+| #4 | Timezone: auto-detect from visitor location |
+| #5 | Timezone: manual selector |
+| #1 | Schedule: classic list view |
+| #6 | Filtering: by team |
+| #7 | Filtering: by group |
+| #8 | Filtering: by stage |
+| #25 | Shareable URLs (filter + timezone + view in query params) |
+
+### Phase 6 — Additional schedule views
+| # | Issue |
+|---|---|
+| #2 | Schedule: calendar view |
+| #3 | Schedule: map view |
+
+### Phase 7 — Standings & bracket
+| # | Issue |
+|---|---|
+| #26 | Group standings table |
+| #27 | Interactive knockout bracket |
+
+### Phase 8 — Polish
+| # | Issue |
+|---|---|
+| #28 | Dark / light mode |
+
+---
+
+## Decisions log
+
+- **No backend.** GitHub Pages is static-only. All logic is client-side:
+  timezone via browser `Intl` API, filtering via client state, map via a JS
+  library, data via a scheduled GitHub Action writing `matches.json`.
+- **PWA / match reminders** (#24) — closed, deprioritized. Not needed for
+  initial release. Can be reopened later.
 
 ---
 
