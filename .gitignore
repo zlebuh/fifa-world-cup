@@ -24,6 +24,9 @@ playwright/.cache/
 .env.local
 .env.*.local
 
+# Claude Code local settings
+.claude/settings.json
+
 # Editor
 .vscode/
 .idea/

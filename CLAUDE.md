@@ -69,8 +69,6 @@ interface Match {
 
 ## Repository structure
 
-> Finalized after stack decision (issue #10). Placeholder below.
-
 ```
 /
 ├── .github/
@@ -80,15 +78,57 @@ interface Match {
 │   └── data/
 │       └── matches.json  # generated — do not edit by hand
 ├── src/
-│   ├── components/       # UI components
-│   ├── views/            # list | calendar | map
-│   ├── services/         # data fetching, timezone utils, filter logic
-│   └── types/            # shared TypeScript types
+│   ├── components/       # Shared UI components (header, filters, etc.)
+│   ├── context/          # React context: AppContext (matches, filters, timezone)
+│   ├── services/         # matches.ts, timezone.ts, filter.ts
+│   ├── types/            # Shared TypeScript types (Match, MatchFilters, Stage)
+│   └── views/
+│       ├── list/         # ListView.tsx
+│       ├── calendar/     # CalendarView.tsx
+│       └── map/          # MapView.tsx
 ├── tests/
-│   ├── unit/             # Vitest unit + component tests
+│   ├── unit/             # Vitest + Testing Library tests (tsconfig.test.json)
 │   └── e2e/              # Playwright E2E + a11y + visual regression
+├── tsconfig.app.json     # Production code (src/, excludes tests)
+├── tsconfig.test.json    # Unit tests (extends app, adds vitest/globals)
+├── tsconfig.node.json    # Vite config / build tooling
+├── vitest.config.ts
 ├── CLAUDE.md             # ← this file
 └── README.md
+```
+
+### Routing
+
+Hash-based routing via `createHashRouter` (react-router-dom v7). GitHub Pages
+has no server-side redirect support, so hash routing avoids the 404 redirect
+hack. Routes:
+
+| Path | View |
+|---|---|
+| `#/` | ListView |
+| `#/calendar` | CalendarView |
+| `#/map` | MapView |
+
+### State management
+
+React context (`AppContext`) holds global state: loaded `matches[]`, active
+`filters`, and `timezone` string. No Redux or Zustand — the app is read-mostly
+with simple filter state. URL encoding of filter+timezone state is handled in
+issue #25.
+
+### Data flow
+
+```
+GitHub Action (scheduled)
+  └── fetches Wikipedia / football API
+  └── writes public/data/matches.json
+  └── commits to main
+
+Browser
+  └── App mounts → fetchMatches() → GET /fifa-world-cup/data/matches.json
+  └── matches stored in AppContext
+  └── filterMatches(matches, filters) applied in each view
+  └── formatKickoff(utcKickoff, timezone) for display
 ```
 
 ---
